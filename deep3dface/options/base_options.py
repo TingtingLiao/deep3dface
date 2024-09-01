@@ -1,12 +1,16 @@
 """This script contains base options for Deep3DFaceRecon_pytorch
 """
-
-import argparse
 import os
-from util import util
-import numpy as np
+import sys  
 import torch
+import argparse
+import numpy as np
+
+abs_path = os.path.abspath(__file__)
+sys.path.append(os.path.dirname(os.path.dirname(abs_path)))
+
 import models
+from util import util  
 import data
 
 
