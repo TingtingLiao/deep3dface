@@ -169,7 +169,6 @@ class ParametricFaceModel:
         b = Y @ gamma[..., 2:]
         face_color = torch.cat([r, g, b], dim=-1) * face_texture
         return face_color
-
     
     def compute_rotation(self, angles):
         """
@@ -271,6 +270,7 @@ class ParametricFaceModel:
             'gamma': gammas,
             'trans': translations
         }
+        
     def compute_for_render(self, coeffs):
         """
         Return:
@@ -294,6 +294,6 @@ class ParametricFaceModel:
         face_texture = self.compute_texture(coef_dict['tex'])
         face_norm = self.compute_norm(face_shape)
         face_norm_roted = face_norm @ rotation
-        face_color = self.compute_color(face_texture, face_norm_roted, coef_dict['gamma'])
-
+        # face_color = self.compute_color(face_texture, face_norm_roted, coef_dict['gamma'])
+        face_color = face_norm * 0.5 + 0.5
         return face_vertex, face_texture, face_color, landmark
