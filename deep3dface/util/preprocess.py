@@ -161,7 +161,13 @@ def resize_n_crop_img(img, lm, t, s, target_size=224., mask=None):
     lm = lm - np.reshape(
             np.array([(w/2 - target_size/2), (h/2-target_size/2)]), [1, 2])
 
-    return img, lm, mask
+    crop_params = {
+        'bbox': [left, up, right, below],
+        'size': [w, h], 
+        'origin_size': [w0, h0],
+    }
+    
+    return img, lm, mask, crop_params
 
 # utils for face reconstruction
 def extract_5p(lm):
@@ -198,10 +204,11 @@ def align_img(img, lm, lm3D, mask=None, target_size=224., rescale_factor=102.):
     s = rescale_factor/s
 
     # processing the image
-    img_new, lm_new, mask_new = resize_n_crop_img(img, lm, t, s, target_size=target_size, mask=mask)
-    trans_params = np.array([w0, h0, s, t[0], t[1]])
+    img_new, lm_new, mask_new, crop_params = resize_n_crop_img(img, lm, t, s, target_size=target_size, mask=mask)
+    # trans_params = np.array([w0, h0, s, t[0], t[1]])
+    trans_params = np.array([w0, h0, s, t[0][0], t[1][0]])
 
-    return trans_params, img_new, lm_new, mask_new
+    return crop_params, img_new, lm_new, mask_new
 
 # utils for face recognition model
 def estimate_norm(lm_68p, H):

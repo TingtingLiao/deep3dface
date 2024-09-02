@@ -15,7 +15,7 @@ try:
 except ImportError:
     from torch.utils.model_zoo import load_url as load_state_dict_from_url
 from typing import Type, Any, Callable, Union, List, Optional
-from .arcface_torch.backbones import get_model
+# from .arcface_torch.backbones import get_model
 from kornia.geometry import warp_affine
 
 def resize_n_crop(image, M, dsize=112):

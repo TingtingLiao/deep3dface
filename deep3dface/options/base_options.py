@@ -1,12 +1,16 @@
 """This script contains base options for Deep3DFaceRecon_pytorch
 """
-
-import argparse
 import os
-from util import util
-import numpy as np
+import sys  
 import torch
+import argparse
+import numpy as np
+
+abs_path = os.path.abspath(__file__)
+sys.path.append(os.path.dirname(os.path.dirname(abs_path)))
+
 import models
+from util import util  
 import data
 
 
@@ -27,7 +31,7 @@ class BaseOptions():
     def initialize(self, parser):
         """Define the common options that are used in both training and test."""
         # basic parameters
-        parser.add_argument('--name', type=str, default='face_recon', help='name of the experiment. It decides where to store samples and models')
+        parser.add_argument('--name', type=str, default='', help='name of the experiment. It decides where to store samples and models')
         parser.add_argument('--gpu_ids', type=str, default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
         parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints', help='models are saved here')
         parser.add_argument('--vis_batch_nums', type=float, default=1, help='batch nums of images for visulization')
@@ -42,7 +46,7 @@ class BaseOptions():
         parser.add_argument('--model', type=str, default='facerecon', help='chooses which model to use.')
 
         # additional parameters
-        parser.add_argument('--epoch', type=str, default='latest', help='which epoch to load? set to latest to use latest cached model')
+        parser.add_argument('--epoch', type=str, default='20', help='which epoch to load? set to latest to use latest cached model')
         parser.add_argument('--verbose', action='store_true', help='if specified, print more debugging information')
         parser.add_argument('--suffix', default='', type=str, help='customized suffix: opt.name = opt.name + suffix: e.g., {model}_{netG}_size{load_size}')
 
