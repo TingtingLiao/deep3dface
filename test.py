@@ -1,18 +1,17 @@
-"""This script is the test script for Deep3DFaceRecon_pytorch
-"""
-
 import os
-from options.test_options import TestOptions
-from data import create_dataset
-from models import create_model
-from util.visualizer import MyVisualizer
-from util.preprocess import align_img
 from PIL import Image
 import numpy as np
-from util.load_mats import load_lm3d
 import torch 
-from data.flist_dataset import default_flist_reader
 from scipy.io import loadmat, savemat
+
+from deep3dface.options.test_options import TestOptions
+from deep3dface.data import create_dataset
+from deep3dface.models import create_model
+from deep3dface.util.visualizer import MyVisualizer
+from deep3dface.util.preprocess import align_img 
+from deep3dface.util.load_mats import load_lm3d 
+from deep3dface.data.flist_dataset import default_flist_reader
+
 
 def get_data_path(root='examples'):
     
@@ -58,7 +57,7 @@ def main(rank, opt, name='examples'):
         data = {
             'imgs': im_tensor,
             'lms': lm_tensor
-        }
+        } 
         model.set_input(data)  # unpack data from data loader
         model.test()           # run inference
         visuals = model.get_current_visuals()  # get image results
@@ -72,3 +71,4 @@ if __name__ == '__main__':
     opt = TestOptions().parse()  # get test options
     main(0, opt,opt.img_folder)
     
+# python test_deepface.py  --checkpoints_dir=data/deep3dface/ --img_folder=datasets/examples/
